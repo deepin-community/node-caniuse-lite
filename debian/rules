@@ -1,0 +1,20 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	cp src/packer/index.js src/packer/index.js.orig
+	mv src src.orig
+	babeljs src.orig -d src
+	node src/packer/index.js
+
+override_dh_auto_clean:
+	if [ -d src.orig ]; then rm -rf src; mv src.orig src; fi
+	if [ -f src/packer/index.js.orig ]; then rm -rf src/packer/index.js; mv src/packer/index.js.orig src/packer/index.js; fi
+	rm -rf data/agents.js data/features* data/regions
+	dh_auto_clean

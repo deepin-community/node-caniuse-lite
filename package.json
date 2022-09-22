@@ -1,0 +1,112 @@
+{
+  "name": "caniuse-lite",
+  "version": "1.0.30001264",
+  "description": "A smaller version of caniuse-db, with only the essentials!",
+  "main": "dist/unpacker/index.js",
+  "scripts": {
+    "integration": "node ./consumer.js > /dev/null",
+    "pack": "rm -Rf data && node src/packer/index.js",
+    "test": "yarn run pack && eslint . && jest src && yarn run integration && size-limit"
+  },
+  "files": [
+    "data",
+    "dist"
+  ],
+  "keywords": [
+    "support",
+    "css",
+    "js",
+    "html5",
+    "svg"
+  ],
+  "author": {
+    "name": "Ben Briggs",
+    "email": "beneb.info@gmail.com",
+    "url": "http://beneb.info"
+  },
+  "repository": "browserslist/caniuse-lite",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/browserslist"
+  },
+  "license": "CC-BY-4.0",
+  "devDependencies": {
+    "@babel/generator": "^7.15.4",
+    "@babel/types": "^7.15.6",
+    "@logux/eslint-config": "^45.4.8",
+    "@size-limit/file": "^5.0.4",
+    "@size-limit/webpack": "^5.0.4",
+    "any-observable": "^0.5.1",
+    "caniuse-db": "1.0.30001264",
+    "clean-publish": "^2.2.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest": "^24.4.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prefer-let": "^1.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-unicorn": "^36.0.0",
+    "jest": "^27.2.1",
+    "lint-staged": "^11.1.2",
+    "nanocolors": "^0.1.12",
+    "prettier": "^2.4.1",
+    "ramda": "^0.27.1",
+    "rxjs": "^7.3.0",
+    "simple-git-hooks": "^2.6.1",
+    "size-limit": "^5.0.4"
+  },
+  "eslintConfig": {
+    "extends": "@logux/eslint-config",
+    "rules": {
+      "security/detect-non-literal-require": "off",
+      "node/global-require": "off",
+      "camelcase": "off"
+    },
+    "overrides": [
+      {
+        "files": "dist/**/*.js",
+        "rules": {
+          "prefer-exponentiation-operator": "off"
+        }
+      },
+      {
+        "files": [
+          "src/**/*.js",
+          "*.js"
+        ],
+        "rules": {
+          "node/no-unsupported-features/node-builtins": "off",
+          "no-console": "off"
+        }
+      }
+    ]
+  },
+  "eslintIgnore": [
+    "data/",
+    "dist/"
+  ],
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "jsxSingleQuote": false,
+    "quoteProps": "consistent",
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
+  },
+  "size-limit": [
+    {
+      "path": "./consumer.js"
+    }
+  ]
+}

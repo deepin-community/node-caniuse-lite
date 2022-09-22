@@ -1,0 +1,33 @@
+Source: node-caniuse-lite
+Maintainer: Debian Javascript Maintainers <pkg-javascript-devel@lists.alioth.debian.org>
+Uploaders: Pirate Praveen <praveen@debian.org>
+Section: javascript
+Testsuite: autopkgtest-pkg-nodejs
+Priority: optional
+Build-Depends: debhelper-compat (= 13)
+ , dh-sequence-nodejs
+ , jest <!nocheck>
+ , node-babel7
+ , node-caniuse-db (>= 1.0.30001181~)
+ , node-mz
+ , node-ramda
+ , node-write-file-promise
+ , node-jest-resolve
+Standards-Version: 4.6.0
+Vcs-Browser: https://salsa.debian.org/js-team/node-caniuse-lite
+Vcs-Git: https://salsa.debian.org/js-team/node-caniuse-lite.git
+Homepage: https://github.com/browserslist/caniuse-lite#readme
+Rules-Requires-Root: no
+
+Package: node-caniuse-lite
+Architecture: all
+Depends: ${misc:Depends}
+Multi-Arch: foreign
+Description: smaller version of caniuse-db, with only the essentials
+ caniuse-lite, is a smaller dataset of caniuse-db that keeps essential parts of
+ the data in a compact format. It does this in multiple ways, such as
+ converting null array entries into empty strings, representing support data as
+ an integer rather than a string, and using base62 references instead of longer
+ human-readable keys.
+ .
+ Node.js is an event-based server-side JavaScript engine.
