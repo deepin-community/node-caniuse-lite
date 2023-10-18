@@ -1,1 +1,4 @@
-node_modules/
+data/agents.js
+data/features.js
+data/features/
+data/regions/

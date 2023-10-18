@@ -1,0 +1,16 @@
+Description: fix syntax for nodejs 12
+Author: Yadd <yadd@debian.org>
+Forwarded: not-needed
+Last-Update: 2022-01-13
+
+--- a/copy-mdn.js
++++ b/copy-mdn.js
+@@ -53,7 +53,7 @@
+    * This is generally when the feature has been supported for so long that it's unknown when it was supported.
+    * Here we just treat this as supported.
+    */
+-  versionIsGreaterOrEqualToVersionAdded ||= versionAdded === true
++  versionIsGreaterOrEqualToVersionAdded = versionIsGreaterOrEqualToVersionAdded ? versionIsGreaterOrEqualToVersionAdded : versionAdded === true
+ 
+   let versionIsLessThanVersionRemoved =
+     !versionRemoved || parseFloat(browserVersion) < parseFloat(versionRemoved)

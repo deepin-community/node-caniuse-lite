@@ -1,2 +1,4 @@
-# Not copyrightable anyway; no information lost by minification
-node-caniuse-lite source: source-is-missing data/browserVersions.js *
+# Data
+source-is-missing [*data/browserVersions.js*]
+source-contains-prebuilt-javascript-object [*data/browserVersions.js*]
+very-long-line-length-in-source-file *data/browserVersions.js*

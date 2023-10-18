@@ -1,11 +1,9 @@
-const R = require('ramda')
-
-const pow = require('../util/pow')
+const sum = require('../util/sum')
 
 const characters =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
-module.exports.encode = function encode(integer) {
+function encode(integer) {
   let remainder = integer
   let result = ''
   do {
@@ -15,10 +13,12 @@ module.exports.encode = function encode(integer) {
   return result
 }
 
-module.exports.decode = R.compose(
-  R.sum,
-  R.addIndex(R.map)((character, index) =>
-    R.multiply(characters.indexOf(character), pow(62, index))
-  ),
-  R.split('')
-)
+function decode(base62) {
+  return sum(
+    base62
+      .split('')
+      .map((character, index) => characters.indexOf(character) * 62 ** index)
+  )
+}
+
+module.exports = { encode, decode }
