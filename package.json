@@ -1,23 +1,21 @@
 {
   "name": "caniuse-lite",
-  "version": "1.0.30001264",
+  "version": "1.0.30001547",
   "description": "A smaller version of caniuse-db, with only the essentials!",
   "main": "dist/unpacker/index.js",
   "scripts": {
-    "integration": "node ./consumer.js > /dev/null",
-    "pack": "rm -Rf data && node src/packer/index.js",
-    "test": "yarn run pack && eslint . && jest src && yarn run integration && size-limit"
+    "pack": "node copy-mdn.js && rm -Rf data && node src/packer/index.js",
+    "test:integration": "node ./consumer.js > /dev/null",
+    "test:unit": "uvu . \\.test\\.js$",
+    "test:lint": "eslint .",
+    "test": "pnpm run pack && pnpm run /^test:/"
   },
   "files": [
     "data",
     "dist"
   ],
   "keywords": [
-    "support",
-    "css",
-    "js",
-    "html5",
-    "svg"
+    "support"
   ],
   "author": {
     "name": "Ben Briggs",
@@ -25,49 +23,50 @@
     "url": "http://beneb.info"
   },
   "repository": "browserslist/caniuse-lite",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/browserslist"
-  },
+  "funding": [
+    {
+      "type": "opencollective",
+      "url": "https://opencollective.com/browserslist"
+    },
+    {
+      "type": "tidelift",
+      "url": "https://tidelift.com/funding/github/npm/caniuse-lite"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/ai"
+    }
+  ],
   "license": "CC-BY-4.0",
   "devDependencies": {
-    "@babel/generator": "^7.15.4",
-    "@babel/types": "^7.15.6",
-    "@logux/eslint-config": "^45.4.8",
-    "@size-limit/file": "^5.0.4",
-    "@size-limit/webpack": "^5.0.4",
-    "any-observable": "^0.5.1",
-    "caniuse-db": "1.0.30001264",
-    "clean-publish": "^2.2.0",
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-jest": "^24.4.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prefer-let": "^1.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-security": "^1.4.0",
-    "eslint-plugin-unicorn": "^36.0.0",
-    "jest": "^27.2.1",
-    "lint-staged": "^11.1.2",
-    "nanocolors": "^0.1.12",
-    "prettier": "^2.4.1",
-    "ramda": "^0.27.1",
-    "rxjs": "^7.3.0",
-    "simple-git-hooks": "^2.6.1",
-    "size-limit": "^5.0.4"
+    "@babel/generator": "^7.23.0",
+    "@babel/types": "^7.23.0",
+    "@logux/eslint-config": "^52.0.1",
+    "@mdn/browser-compat-data": "5.3.21",
+    "caniuse-db": "1.0.30001547",
+    "clean-publish": "^4.2.0",
+    "eslint": "^8.50.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-n": "^16.1.0",
+    "eslint-plugin-node-imports": "^1.0.2",
+    "eslint-plugin-perfectionist": "^2.1.0",
+    "eslint-plugin-prefer-let": "^3.0.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "uvu": "^0.5.6"
   },
   "eslintConfig": {
     "extends": "@logux/eslint-config",
     "rules": {
-      "security/detect-non-literal-require": "off",
-      "node/global-require": "off",
+      "perfectionist/sort-objects": "off",
+      "n/global-require": "off",
       "camelcase": "off"
     },
     "overrides": [
       {
         "files": "dist/**/*.js",
         "rules": {
+          "node-import/prefer-node-protocol": "off",
           "prefer-exponentiation-operator": "off"
         }
       },
@@ -77,7 +76,7 @@
           "*.js"
         ],
         "rules": {
-          "node/no-unsupported-features/node-builtins": "off",
+          "n/no-unsupported-features/node-builtins": "off",
           "no-console": "off"
         }
       }
@@ -87,15 +86,6 @@
     "data/",
     "dist/"
   ],
-  "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
-  },
-  "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint --fix"
-    ]
-  },
   "prettier": {
     "arrowParens": "avoid",
     "jsxSingleQuote": false,
@@ -104,9 +94,7 @@
     "singleQuote": true,
     "trailingComma": "none"
   },
-  "size-limit": [
-    {
-      "path": "./consumer.js"
-    }
-  ]
+  "clean-publish": {
+    "cleanDocs": true
+  }
 }

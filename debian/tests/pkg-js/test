@@ -1,8 +1,4 @@
-if test "$AUTOPKGTEST_TMP" != ""; then
-	rm -f data
-	cp -r /usr/share/nodejs/caniuse-lite/data .
-	cp -r dist/unpacker dist/lib src/
-	node src/packer/index.js
-	rm -f src/feature.test.js src/agents.test.js
+if test "$AUTOPKGTEST_TMP" != "" ; then
+	rm -f src/feature.test.js
 fi
-jest --modulePathIgnorePatterns '.pc' --ci src
+uvu . '.test.js'
